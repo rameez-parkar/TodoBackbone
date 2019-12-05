@@ -2,35 +2,38 @@
 // Later, you'll see how to organize your code into separate
 // files and modules.
 
-const Fruit = Backbone.Model.extend();
+const TodoModel = Backbone.Model.extend();
 
-const Fruits = Backbone.Collection.extend({
-  model: Fruit
+const TodoCollection = Backbone.Collection.extend({
+  model: TodoModel
 });
 
-const FruitView = Backbone.View.extend({
+const TodoView = Backbone.View.extend({
   render: function() {
-    this.$el.html("<li>" + this.model.get("name") + "</li>");
+    this.$el.html("<li>" + this.model.get("task") + "</li>");
     return this;
   }
 });
 
-const FruitsView = Backbone.View.extend({
+const TodoListView = Backbone.View.extend({
   render: function() {
-    this.model.each(fruit => {
-      const fruitView = new FruitView({ model: fruit });
-      this.$el.append(fruitView.render().$el);
+    this.model.each(task => {
+      const todoView = new TodoView({ model: task });
+      this.$el.append(todoView.render().$el);
     });
     return this;
   }
 });
 
-const fruits = new Fruits([
-  new Fruit({ name: "Apple" }),
-  new Fruit({ name: "Banana" }),
-  new Fruit({ name: "Orange" }),
-  new Fruit({ name: "Watermelon" })
+const tasks = new TodoCollection([
+  new TodoModel({ task: "Complete Backbone Assignment" }),
+  new TodoModel({ task: "Complete Redux V1 Assignment" }),
+  new TodoModel({ task: "Complete Redux V2 Assignment" }),
+  new TodoModel({ task: "Complete Redux V3 Assignment" })
 ]);
 
-const fruitsView = new FruitsView({ el: "#container", model: fruits });
-fruitsView.render();
+const todoCollectionView = new TodoListView({
+  el: "#container",
+  model: tasks
+});
+todoCollectionView.render();
