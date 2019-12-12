@@ -1,4 +1,10 @@
-
-// In the first few sections, we do all the coding here.
-// Later, you'll see how to organize your code into separate
-// files and modules.
+const todoCollection = new TodoCollection();
+todoCollection.fetch({
+  success: function() {
+    const todoListView = new TodoListView({
+      el: "#container",
+      model: todoCollection
+    });
+    todoListView.render();
+  }
+});
